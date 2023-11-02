@@ -13,3 +13,7 @@ func (r *TodoRepository) Add(title string) *model.Todo {
 	r.Database.SaveDb(todos)
 	return todo
 }
+
+func (r *TodoRepository) Get() []*model.Todo {
+	return r.Database.LoadDb()
+}
