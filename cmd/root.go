@@ -18,5 +18,6 @@ func NewRootCmd(env *config.Env) *cobra.Command {
 	}
 
 	root.AddCommand(todo.NewTodoCmd(env))
+	root.PersistentFlags().String("file", "./gotos.json", "Path to JSON file to use as DB")
 	return root
 }
