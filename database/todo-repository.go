@@ -50,6 +50,26 @@ func (r *TodoRepository) GetById(id int) (*model.Todo, error) {
 	return nil, errors.New(fmt.Sprintf("Unable to find todo with id %d\n", id))
 }
 
+func (r *TodoRepository) Update(id int, complete bool) (*model.Todo, error) {
+	todos := r.Database.LoadDb()
+	var updatedTodo *model.Todo
+
+	for _, todo := range todos {
+		if todo.Id == id {
+			updatedTodo = todo
+			updatedTodo.Completed = complete
+		}
+	}
+
+	if updatedTodo == nil {
+		return nil, fmt.Errorf("unable to find todo with id %d", id)
+	}
+
+	r.Database.SaveDb(todos)
+
+	return updatedTodo, nil
+}
+
 func (r *TodoRepository) Remove(id int) (*model.Todo, error) {
 	todos := r.Database.LoadDb()
 	filteredTodos := []*model.Todo{}

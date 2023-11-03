@@ -18,6 +18,7 @@ func NewTodoCmd(env *config.Env) *cobra.Command {
 	todoCmd.AddCommand(cmd.NewAddTodoCmd(env))
 	todoCmd.AddCommand(cmd.NewGetTodoCmd(env))
 	todoCmd.AddCommand(cmd.NewRemoveTodoCmd(env))
+	todoCmd.AddCommand(cmd.NewCompleteTodoCmd(env))
 
 	return todoCmd
 }
