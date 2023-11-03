@@ -49,3 +49,23 @@ func (r *TodoRepository) GetById(id int) (*model.Todo, error) {
 
 	return nil, errors.New(fmt.Sprintf("Unable to find todo with id %d\n", id))
 }
+
+func (r *TodoRepository) Remove(id int) (*model.Todo, error) {
+	todos := r.Database.LoadDb()
+	filteredTodos := []*model.Todo{}
+	var deletedTodo *model.Todo = nil
+	for _, todo := range todos {
+		if todo.Id == id {
+			deletedTodo = todo
+		} else {
+			filteredTodos = append(filteredTodos, todo)
+		}
+	}
+
+	if deletedTodo == nil {
+		return nil, errors.New(fmt.Sprintf("Unable to find todo with id %d to delete\n", id))
+	}
+
+	r.Database.SaveDb(filteredTodos)
+	return deletedTodo, nil
+}
