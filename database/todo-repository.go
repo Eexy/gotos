@@ -1,6 +1,9 @@
 package database
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/eexy/gotos/model"
 )
 
@@ -33,4 +36,16 @@ func (r *TodoRepository) generateNewTodoId(todos []*model.Todo) int {
 
 func (r *TodoRepository) Get() []*model.Todo {
 	return r.Database.LoadDb()
+}
+
+func (r *TodoRepository) GetById(id int) (*model.Todo, error) {
+	todos := r.Database.LoadDb()
+
+	for _, todo := range todos {
+		if todo.Id == id {
+			return todo, nil
+		}
+	}
+
+	return nil, errors.New(fmt.Sprintf("Unable to find todo with id %d\n", id))
 }
