@@ -23,7 +23,8 @@ func NewGetTodoCmd(env *config.Env) *cobra.Command {
 					env.Logger.Fatal(err.Error())
 				}
 
-				env.Logger.Println(todo)
+				fmt.Println(todo)
+
 				return
 			}
 
