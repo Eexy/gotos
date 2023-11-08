@@ -11,9 +11,9 @@ type TodoRepository struct {
 	Database *Database
 }
 
-func (r *TodoRepository) Add(title string) *model.Todo {
+func (r *TodoRepository) Add(title string, priority int) *model.Todo {
 	todos := r.Database.LoadDb()
-	todo := &model.Todo{Id: r.generateNewTodoId(todos), Title: title, Completed: false}
+	todo := &model.Todo{Id: r.generateNewTodoId(todos), Title: title, Priority: priority, Completed: false}
 	todos = append(todos, todo)
 	r.Database.SaveDb(todos)
 	return todo

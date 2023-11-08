@@ -15,12 +15,18 @@ func NewAddTodoCmd(env *config.Env) *cobra.Command {
 				env.Logger.Fatalln(err.Error())
 			}
 
-			todo := env.TodoRepository.Add(title)
+			priority, err := cmd.Flags().GetInt("priority")
+			if err != nil {
+				env.Logger.Fatalln(err.Error())
+			}
+
+			todo := env.TodoRepository.Add(title, priority)
 			env.Logger.Println(todo)
 		},
 	}
 
 	addCmd.Flags().StringP("title", "t", "", "Set new todo title")
+	addCmd.Flags().IntP("priority", "p", 0, "Set todo priority")
 	addCmd.MarkFlagRequired("title")
 
 	return addCmd
